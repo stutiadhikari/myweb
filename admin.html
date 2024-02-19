@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Welcome, Admin</h1>
+        <div class="upload-form">
+            <h2>Upload New Note</h2>
+            <form action="upload_note.php" method="post" enctype="multipart/form-data">
+                <label for="note_title">Note Title:</label>
+                <input type="text" id="note_title" name="note_title" required>
+                <label for="note_file">Choose Note File:</label>
+                <input type="file" id="note_file" name="note_file" required>
+                <button type="submit" name="upload">Upload Note</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
+

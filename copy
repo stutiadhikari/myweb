@@ -1,0 +1,166 @@
+h1{
+    position: relative;
+    font-size: 12vw;
+    color: #44666f;
+    -webkit-text-stroke: 0.08vw #ecf3f3;
+    text-transform: uppercase;
+
+  }
+
+  h1::before
+  {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: #188f8d;
+    -webkit-text-stroke:0vw #383d52 ;
+    border-right:2px solid #03f0ec ;
+    overflow: hidden;
+    animation: animate 6s linear infinite ;
+
+
+  }
+  
+
+  @keyframes animate {
+    0%, 10%, 100% {
+        width: 0;
+    }
+    70%, 90% {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+           
+
+Dclass="search">
+<input class="srch" type="search" name="" placeholder="Type To text">
+<a OCTYPE html>
+<html< lang="en">
+<head>
+<title>Webpage Design</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main">
+<div class="navbar">
+<div class="icon">
+<h2 class="logo">NOTEnsion</h2>
+</div>
+
+<div class="menu">
+<ul>
+    <li><a href="#">HOME</a></li>
+    <li><a href="#">ABOUT</a></li>
+    <li><a href="#">SERVICE</a></li>
+    <li><a href="#">DESIGN</a></li>
+    <li><a href="#">CONTACT</a></li>
+</ul>
+</div>
+
+<div href="#"> <button class="btn">Search</button></a>
+</div>
+
+</div> 
+<div class="content">
+<h1>NOTEnsion</h1>
+
+
+<button class="cn"><a href="#">JOIN US</a></button>
+
+<div class="form">
+    <h2>Login Here</h2>
+    <input type="email" name="email" placeholder="Enter Email Here">
+    <input type="password" name="" placeholder="Enter Password Here">
+    <button class="btnn"><a href="#">Login</a></button>
+
+    <p class="link">Don't have an account<br>
+    <a href="#">Sign up </a> here</a></p>
+    <p class="liw">Log in with</p>
+
+    <div class="icons">
+        <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+        <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+        <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+        <a href="#"><ion-icon name="logo-google"></ion-icon></a>
+        <a href="#"><ion-icon name="logo-skype"></ion-icon></a>
+    </div>
+
+</div>
+    </div>
+</div>
+</div>
+</div>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+    if(isset($_POST["submit"])) {
+        $firstname = $_POST["firstname"];
+        $lastname = $_POST["lastname"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+        $errors = array();
+
+        if(empty($firstname) OR empty($lastname) OR empty($email) OR empty($password)) {
+            array_push($errors, "All fields are required");
+        }
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            array_push($errors, "Email is not valid ");
+        }
+        if(strlen($password) < 8) {
+            array_push($errors, "Password must be at least 8 characters long");
+        }
+        require_once "database.php";
+        $sql="SELECT * FROM users WHERE email='$email'";
+       $result=mysqli_query($conn,$sql);
+       $rowCount=mysqli_num_rows($result);
+       if($rowCount>0) {
+        array_push($error,"Email already exists!");
+       }
+
+        if(count($errors) > 0) {
+            foreach($errors as $error) {
+                echo "<div class='alert alert-danger'>$error</div>";
+            }
+        } else {
+          
+            $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES (?,?,?,?)";
+            $stmt = mysqli_stmt_init($conn);
+
+            $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
+            if($prepareStmt) {
+                mysqli_stmt_bind_param($stmt, "ssss", $firstname, $lastname, $email, $passwordHash);
+                mysqli_stmt_execute($stmt);
+                echo "<div class='alert alert-success'>You are registered successfully.</div>";
+            } else {
+                die("Something went wrong");
+            }
+        }
+    }
+?>
